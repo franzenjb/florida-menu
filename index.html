@@ -117,10 +117,10 @@
     <div class="grid">
         <div class="category">
             <h3>Situational Awareness</h3>
-            <a onclick="navigateToPage('1-Situational-Awareness', 'Operating-Picture-')" style="background:#6b46c1">Operating Picture</a>
-            <a onclick="navigateToPage('1-Situational-Awareness', 'Situational-Awareness')" style="background:#6b46c1">Situational Awareness</a>
-            <a onclick="navigateToPage('1-Situational-Awareness', 'Weather')" style="background:#6b46c1">Weather Maps</a>
-            <a onclick="navigateToPage('1-Situational-Awareness', 'National-Hurricane-Center')" style="background:#6b46c1">Natl Hurricane Center</a>
+            <a href="#page/1-Situational-Awareness?views=Operating-Picture-" target="_parent" style="background:#6b46c1">Operating Picture</a>
+            <a href="#page/1-Situational-Awareness?views=Situational-Awareness" target="_parent" style="background:#6b46c1">Situational Awareness</a>
+            <a href="#page/1-Situational-Awareness?views=Weather" target="_parent" style="background:#6b46c1">Weather Maps</a>
+            <a href="#page/1-Situational-Awareness?views=National-Hurricane-Center" target="_parent" style="background:#6b46c1">Natl Hurricane Center</a>
         </div>
         
         <div class="category">
@@ -212,30 +212,22 @@ function navigateToPage(pageId, viewId) {
             hash += '?views=' + viewId;
         }
         
-        // Try to navigate parent window using hash (no reload)
+        // ONLY use postMessage - don't change parent window directly
         if (window.parent && window.parent !== window) {
-            window.parent.location.hash = hash;
+            window.parent.postMessage({
+                type: 'navigate',
+                hash: hash,
+                pageId: pageId,
+                viewId: viewId
+            }, '*');
             return;
         }
         
-        // Try to navigate top window using hash
-        if (window.top && window.top !== window) {
-            window.top.location.hash = hash;
-            return;
-        }
-        
-        // Fallback - navigate current window
+        // If no parent, just change our own hash (shouldn't happen in iframe)
         window.location.hash = hash;
         
     } catch (error) {
-        console.log('Hash navigation failed:', error);
-        // Final fallback - try posting message to parent
-        if (window.parent) {
-            window.parent.postMessage({
-                type: 'navigate',
-                hash: hash
-            }, '*');
-        }
+        console.log('Navigation failed:', error);
     }
 }
 
