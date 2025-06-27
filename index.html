@@ -114,10 +114,10 @@
     <div class="grid">
         <div class="category">
             <h3>Situational Awareness</h3>
-            <a href="#page/1-Situational-Awareness" target="_parent" style="background:#6b46c1">Operating Picture</a>
-            <a href="#page/1-Situational-Awareness" target="_parent" style="background:#6b46c1">Situational Awareness</a>
-            <a href="#page/8-Weather" target="_parent" style="background:#6b46c1">Weather Maps</a>
-            <a href="#page/8-Weather" target="_parent" style="background:#6b46c1">Natl Hurricane Center</a>
+            <a onclick="navigateToPage('1-Situational-Awareness')" style="background:#6b46c1; cursor: pointer;">Operating Picture</a>
+            <a onclick="navigateToPage('1-Situational-Awareness')" style="background:#6b46c1; cursor: pointer;">Situational Awareness</a>
+            <a onclick="navigateToPage('8-Weather')" style="background:#6b46c1; cursor: pointer;">Weather Maps</a>
+            <a onclick="navigateToPage('8-Weather')" style="background:#6b46c1; cursor: pointer;">Natl Hurricane Center</a>
         </div>
         
         <div class="category">
@@ -201,30 +201,38 @@
 </div>
 
 <script>
-function navigateToPage(pageId, viewId) {
+function navigateToPage(pageId) {
     try {
-        // Build the hash URL for Experience Builder
-        let hash = '#page/' + pageId;
-        if (viewId && viewId !== '') {
-            hash += '?views=' + viewId;
-        }
+        console.log('Attempting to navigate to:', pageId);
         
-        // ONLY use postMessage - don't change parent window directly
+        // Method 1: Try Experience Builder's message system
         if (window.parent && window.parent !== window) {
             window.parent.postMessage({
-                type: 'navigate',
-                hash: hash,
+                type: 'NAVIGATE_TO_PAGE',
                 pageId: pageId,
-                viewId: viewId
+                source: 'menu'
             }, '*');
-            return;
+            console.log('Sent postMessage to parent');
         }
         
-        // If no parent, just change our own hash (shouldn't happen in iframe)
-        window.location.hash = hash;
+        // Method 2: Try direct hash change on parent
+        setTimeout(() => {
+            try {
+                if (window.parent && window.parent.location) {
+                    window.parent.location.hash = '#page/' + pageId;
+                    console.log('Set parent hash');
+                }
+            } catch (e) {
+                console.log('Parent hash failed:', e);
+            }
+        }, 100);
+        
+        // Method 3: Try setting our own hash
+        window.location.hash = '#page/' + pageId;
+        console.log('Set local hash');
         
     } catch (error) {
-        console.log('Navigation failed:', error);
+        console.log('Navigation error:', error);
     }
 }
 
