@@ -182,14 +182,43 @@ function navigateToPage(pageId, viewId) {
             hash += '?views=' + viewId;
         }
         
-        // Use hash navigation only (no full URL reload)
+        console.log('Attempting navigation to:', hash);
+        
+        // Method 1: PostMessage to Experience Builder
         if (window.parent && window.parent !== window) {
-            window.parent.location.hash = hash;
-            return;
+            window.parent.postMessage({
+                type: 'page-navigation',
+                pageId: pageId,
+                viewId: viewId,
+                hash: hash
+            }, '*');
+            console.log('Sent postMessage');
         }
         
-        // Fallback
-        window.location.hash = hash;
+        // Method 2: Try direct hash change (backup)
+        setTimeout(() => {
+            try {
+                if (window.parent && window.parent.location) {
+                    window.parent.location.hash = hash;
+                    console.log('Set parent hash');
+                }
+            } catch (e) {
+                console.log('Hash change failed:', e);
+            }
+        }, 100);
+        
+        // Method 3: Try different postMessage formats
+        if (window.parent) {
+            window.parent.postMessage({
+                action: 'navigate',
+                target: hash
+            }, '*');
+            
+            window.parent.postMessage({
+                type: 'ESRI_NAVIGATE',
+                url: hash
+            }, '*');
+        }
         
     } catch (error) {
         console.log('Navigation failed:', error);
