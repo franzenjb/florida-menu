@@ -15,31 +15,6 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-        .header {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: #dc143c;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-            border-radius: 5px;
-        }
-        h2 {
-            color: #333;
-            font-size: 24px;
-            margin: 0;
-        }
         .search-container {
             text-align: center;
             margin-bottom: 20px;
@@ -105,8 +80,6 @@
 </head>
 <body>
 <div class="container">
-
-    
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterMenu()">
     </div>
@@ -114,10 +87,10 @@
     <div class="grid">
         <div class="category">
             <h3>Situational Awareness</h3>
-            <a onclick="navigateToPage('1-Situational-Awareness')" style="background:#6b46c1; cursor: pointer;">Operating Picture</a>
-            <a onclick="navigateToPage('1-Situational-Awareness')" style="background:#6b46c1; cursor: pointer;">Situational Awareness</a>
-            <a onclick="navigateToPage('8-Weather')" style="background:#6b46c1; cursor: pointer;">Weather Maps</a>
-            <a onclick="navigateToPage('8-Weather')" style="background:#6b46c1; cursor: pointer;">Natl Hurricane Center</a>
+            <a onclick="navigateToPage('1-Situational-Awareness', 'Operating-Picture-')" style="background:#6b46c1">Operating Picture</a>
+            <a onclick="navigateToPage('1-Situational-Awareness', 'Situational-Awareness')" style="background:#6b46c1">Situational Awareness</a>
+            <a onclick="navigateToPage('1-Situational-Awareness', 'Weather')" style="background:#6b46c1">Weather Maps</a>
+            <a onclick="navigateToPage('1-Situational-Awareness', 'National-Hurricane-Center')" style="background:#6b46c1">Natl Hurricane Center</a>
         </div>
         
         <div class="category">
@@ -201,38 +174,25 @@
 </div>
 
 <script>
-function navigateToPage(pageId) {
+function navigateToPage(pageId, viewId) {
     try {
-        console.log('Attempting to navigate to:', pageId);
-        
-        // Method 1: Try Experience Builder's message system
-        if (window.parent && window.parent !== window) {
-            window.parent.postMessage({
-                type: 'NAVIGATE_TO_PAGE',
-                pageId: pageId,
-                source: 'menu'
-            }, '*');
-            console.log('Sent postMessage to parent');
+        // Build the hash URL for Experience Builder
+        let hash = '#page/' + pageId;
+        if (viewId && viewId !== '') {
+            hash += '?views=' + viewId;
         }
         
-        // Method 2: Try direct hash change on parent
-        setTimeout(() => {
-            try {
-                if (window.parent && window.parent.location) {
-                    window.parent.location.hash = '#page/' + pageId;
-                    console.log('Set parent hash');
-                }
-            } catch (e) {
-                console.log('Parent hash failed:', e);
-            }
-        }, 100);
+        // Use hash navigation only (no full URL reload)
+        if (window.parent && window.parent !== window) {
+            window.parent.location.hash = hash;
+            return;
+        }
         
-        // Method 3: Try setting our own hash
-        window.location.hash = '#page/' + pageId;
-        console.log('Set local hash');
+        // Fallback
+        window.location.hash = hash;
         
     } catch (error) {
-        console.log('Navigation error:', error);
+        console.log('Navigation failed:', error);
     }
 }
 
