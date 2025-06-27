@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florida Regional Operating Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #e8e8e8;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #dc143c;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin: 0;
+        }
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #searchInput {
+            padding: 10px 20px;
+            width: 80%;
+            max-width: 400px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .category {
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .category h3 {
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+            margin: 0 0 10px;
+        }
+        .category h4 {
+            color: #333;
+            text-align: center;
+            margin: 10px 0 8px;
+            font-size: 14px;
+        }
+        .category a {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 20px;
+            color: #fff;
+            transition: opacity 0.3s;
+        }
+        .category a:hover {
+            opacity: 0.8;
+        }
+        .questions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .questions a {
+            display: inline-block;
+            background: #7f1d1d;
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">+</div>
+        <h2>Florida Regional Operating Summary</h2>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterMenu()">
+    </div>
+    
+    <div class="grid">
+        <div class="category">
+            <h3>Situational Awareness</h3>
+            <a href="#page/operating-picture" style="background:#6b46c1">Operating Picture</a>
+            <a href="#page/situational-awareness" style="background:#6b46c1">Situational Awareness</a>
+            <a href="#page/weather-maps" style="background:#6b46c1">Weather Maps</a>
+            <a href="#page/natl-hurricane-center" style="background:#6b46c1">Natl Hurricane Center</a>
+        </div>
+        
+        <div class="category">
+            <h3>Level 1-2 DAT</h3>
+            <a href="#page/level-1-2-dashboard" style="background:#22c55e">Level 1-2 Dashboard</a>
+            <a href="#page/dat-response-frequency" style="background:#22c55e">DAT Response Frequency</a>
+            <a href="#page/rc-respond" style="background:#22c55e">RC Respond</a>
+            <a href="#page/hf-regional-dashboard" style="background:#22c55e">HF Regional Dashboard</a>
+            <a href="#page/home-fire-trend-report" style="background:#22c55e">Home Fire Trend Report</a>
+            <a href="#page/fd-engage-dashboard" style="background:#22c55e">FD Engage Dashboard</a>
+        </div>
+        
+        <div class="category">
+            <h3>Preparedness</h3>
+            <a href="#page/nf-community-prep" style="background:#3b82f6">NF Community Prep</a>
+            <h4>Readiness Metric</h4>
+            <a href="#page/national-readiness" style="background:#1e40af">National Readiness</a>
+            <a href="#page/fy-metric-report" style="background:#1e40af">FY Metric Report</a>
+            <a href="#page/hurricane-planning" style="background:#1e40af">Hurricane Planning</a>
+            <a href="#page/florida-response" style="background:#1e40af">Florida Response</a>
+            <a href="#page/loi-shelter-map" style="background:#1e40af">LOI Shelter Map</a>
+        </div>
+        
+        <div class="category">
+            <h3>Trailer Warehouse</h3>
+            <a href="#page/rim-inventory-mgmt" style="background:#c2410c">RIM Inventory Mgmt</a>
+            <a href="#page/erv" style="background:#c2410c">ERV</a>
+            <a href="#page/trailers" style="background:#c2410c">Trailers</a>
+            <a href="#page/feeding-logistics" style="background:#c2410c">Feeding Logistics</a>
+        </div>
+        
+        <div class="category">
+            <h3>Weather</h3>
+            <a href="#page/hurricane-center" style="background:#059669">Hurricane Center</a>
+            <a href="#page/national-weather" style="background:#059669">National Weather</a>
+            <a href="#page/storm-prediction" style="background:#059669">Storm Prediction</a>
+            <a href="#page/river-gauges" style="background:#059669">River Gauges</a>
+            <a href="#page/usgs-flood" style="background:#059669">USGS Flood</a>
+        </div>
+        
+        <div class="category">
+            <h3>Workforce & Training</h3>
+            <a href="#page/door" style="background:#1e3a8a">DOOR</a>
+            <a href="#page/workforce-readiness" style="background:#1e3a8a">Workforce Readiness</a>
+        </div>
+        
+        <div class="category">
+            <h3>Community Data</h3>
+            <a href="#page/demographics" style="background:#dc2626">Demographics</a>
+            <a href="#page/military-veterans" style="background:#dc2626">Military and Veterans</a>
+            <a href="#page/fema-rapt" style="background:#dc2626">FEMA RAPT</a>
+            <a href="#page/fema-rapt-beta" style="background:#dc2626">FEMA RAPT Beta</a>
+        </div>
+        
+        <div class="category">
+            <h3>Partnerships</h3>
+            <a href="#page/partner-service-delivery" style="background:#7f1d1d">Partner Service Delivery</a>
+            <a href="#page/latino-engagement" style="background:#7f1d1d">Latino Engagement</a>
+            <a href="#page/partnerships" style="background:#7f1d1d">Partnerships</a>
+        </div>
+        
+        <div class="category">
+            <h3>Operations</h3>
+            <a href="#page/disaster-service-tech" style="background:#2563eb">Disaster Service Tech</a>
+            <a href="#page/shelter-intake" style="background:#2563eb">Shelter Intake</a>
+            <a href="#page/call-center" style="background:#2563eb">Call Center</a>
+            <a href="#page/current-ops-report" style="background:#2563eb">Current Ops Report</a>
+        </div>
+        
+        <div class="category">
+            <h3>HFC</h3>
+            <a href="#page/secar-hfc" style="background:#b91c1c">SECAR HFC</a>
+            <a href="#page/dat-response-app" style="background:#b91c1c">DAT Response App</a>
+            <a href="#page/dat-planning-tool" style="background:#b91c1c">DAT Planning Tool</a>
+        </div>
+    </div>
+    
+    <div class="questions">
+        <a href="#page/questions-comments">Questions Comments</a>
+    </div>
+</div>
+
+<script>
+function filterMenu() {
+    var input = document.getElementById('searchInput');
+    var filter = input.value.toLowerCase();
+    var categories = document.getElementsByClassName('category');
+    var links = document.querySelectorAll('a');
+    
+    if (!filter) {
+        for (var i = 0; i < categories.length; i++) {
+            categories[i].style.display = '';
+        }
+        for (var i = 0; i < links.length; i++) {
+            links[i].style.display = '';
+        }
+        return;
+    }
+    
+    for (var i = 0; i < categories.length; i++) {
+        categories[i].style.display = 'none';
+    }
+    
+    for (var i = 0; i < links.length; i++) {
+        if (links[i].textContent.toLowerCase().indexOf(filter) > -1) {
+            links[i].style.display = '';
+            var parent = links[i].parentElement;
+            if (parent.className === 'category') {
+                parent.style.display = '';
+            }
+        } else {
+            links[i].style.display = 'none';
+        }
+    }
+}
+</script>
+</body>
+</html>
